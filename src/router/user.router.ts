@@ -1,9 +1,8 @@
 import Router from '@koa/router'
+import userController from '../controller/user.controller'
 
 const userRouter = new Router({ prefix: '/users' })
 
-userRouter.get('/list', (ctx) => {
-  ctx.body = 'user list'
-})
+userRouter.post('/register', userController.register)
 
 export default userRouter

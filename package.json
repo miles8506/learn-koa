@@ -28,6 +28,7 @@
     "dotenv": "^16.4.5",
     "eslint-config-prettier": "^9.1.0",
     "koa": "^2.15.3",
-    "koa-bodyparser": "^4.4.1"
+    "koa-bodyparser": "^4.4.1",
+    "mysql2": "^3.11.4"
   }
 }
