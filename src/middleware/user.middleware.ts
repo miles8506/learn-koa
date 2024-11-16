@@ -4,6 +4,7 @@ import { IUserRegisterRequest } from '../types/users/register'
 import userService from '../service/user.service'
 import { EVENT_NAME } from '../constants/eventName'
 import { STATUS_CODE } from '../constants/statusCode'
+import { encryptionPassword } from '../utils/encryption'
 
 class UserMiddleware {
   async verifyRegister(ctx: RouterContext, next: Next) {
@@ -26,6 +27,14 @@ class UserMiddleware {
 
       return
     }
+
+    await next()
+  }
+
+  async crypto(ctx: RouterContext, next: Next) {
+    const payload = ctx.request.body as IUserRegisterRequest
+
+    payload.password = encryptionPassword(payload.password)
 
     await next()
   }

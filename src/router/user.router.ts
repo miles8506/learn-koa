@@ -7,6 +7,7 @@ const userRouter = new Router({ prefix: '/users' })
 userRouter.post(
   '/register',
   userMiddleware.verifyRegister,
+  userMiddleware.crypto,
   userController.register
 )
 
