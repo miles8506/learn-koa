@@ -24,6 +24,9 @@ app.on(
       case STATUS_CODE.USER_PASSWORD_FAILED:
         errorMessage = 'password is incorrect'
         break
+      case STATUS_CODE.AUTHORIZATION_FAILED:
+        errorMessage = 'authorization failed'
+        break
       default:
         break
     }

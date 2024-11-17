@@ -5,6 +5,8 @@ import { EVENT_NAME } from '../constants/eventName'
 import { STATUS_CODE } from '../constants/statusCode'
 import userService from '../service/user.service'
 import { encryptionPassword } from '../utils/encryption'
+import jwt from 'jsonwebtoken'
+import { publicKey } from '../constants/keys'
 
 class LoginMiddleware {
   async verify(
@@ -37,6 +39,19 @@ class LoginMiddleware {
     ctx.user = { id: user.id, name: user.name }
 
     await next()
+  }
+
+  auth(ctx: RouterContext, next: Next) {
+    const token = ctx.header.authorization?.replace('Bearer ', '') ?? ''
+
+    try {
+      jwt.verify(token, publicKey, { algorithms: ['RS256'] })
+    } catch {
+      ctx.app.emit(EVENT_NAME.ERROR, STATUS_CODE.AUTHORIZATION_FAILED, ctx)
+      return
+    }
+
+    next()
   }
 }
 
