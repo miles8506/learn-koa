@@ -18,6 +18,12 @@ app.on(
       case STATUS_CODE.ACCOUNT_OR_PASSWORD_REQUIRED:
         errorMessage = 'account or password required'
         break
+      case STATUS_CODE.NOT_FOUND_USER_NAME:
+        errorMessage = 'pls recheck user name'
+        break
+      case STATUS_CODE.USER_PASSWORD_FAILED:
+        errorMessage = 'password is incorrect'
+        break
       default:
         break
     }

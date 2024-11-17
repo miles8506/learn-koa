@@ -1,5 +1,5 @@
-import connection from "../app/database";
-import { IUserRegisterRequest, IUserRegister } from "../types/users/register";
+import connection from '../app/database'
+import { IUserRegisterRequest, IUserRegister } from '../types/users/register'
 
 class UserService {
   async register({ name, password }: IUserRegisterRequest) {
