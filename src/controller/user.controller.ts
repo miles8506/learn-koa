@@ -15,6 +15,7 @@ class UserController {
       }
     } catch {
       ctx.app.emit(EVENT_NAME.ERROR, STATUS_CODE.DB_INSERT_ERROR, ctx)
+      return
     }
   }
 }

@@ -11,7 +11,14 @@ class UserService {
   }
 
   async findUserByName(name: string) {
-    const statement = `SELECT * FROM user WHERE name = ?`
+    const statement = `
+      SELECT 
+        user.id id,
+        user.name name,
+        user.password password,
+        user.createAt create_time,
+        user.updateAt update_time
+      FROM user WHERE name = ?`
 
     const [result] = await connection.execute(statement, [name])
 

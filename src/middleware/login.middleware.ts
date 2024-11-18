@@ -12,7 +12,6 @@ import { IUser } from '../types/users'
 class LoginMiddleware {
   async verify(ctx: RouterContext<{ user: IUser }>, next: Next) {
     const { name, password } = ctx.request.body as ILoginRequest
-
     if (!name.trim() || !password.trim()) {
       ctx.app.emit(
         EVENT_NAME.ERROR,
@@ -22,19 +21,24 @@ class LoginMiddleware {
       return
     }
 
-    const user = (await userService.findUserByName(name))?.[0]
+    try {
+      const user = (await userService.findUserByName(name))?.[0]
 
-    if (!user) {
-      ctx.app.emit(EVENT_NAME.ERROR, STATUS_CODE.NOT_FOUND_USER_NAME, ctx)
+      if (!user) {
+        ctx.app.emit(EVENT_NAME.ERROR, STATUS_CODE.NOT_FOUND_USER_NAME, ctx)
+        return
+      }
+
+      if (user.password !== encryptionPassword(password)) {
+        ctx.app.emit(EVENT_NAME.ERROR, STATUS_CODE.USER_PASSWORD_FAILED, ctx)
+        return
+      }
+
+      ctx.user = { id: user.id, name: user.name }
+    } catch {
+      ctx.app.emit(EVENT_NAME.ERROR, STATUS_CODE.DB_INSERT_ERROR, ctx)
       return
     }
-
-    if (user.password !== encryptionPassword(password)) {
-      ctx.app.emit(EVENT_NAME.ERROR, STATUS_CODE.USER_PASSWORD_FAILED, ctx)
-      return
-    }
-
-    ctx.user = { id: user.id, name: user.name }
 
     await next()
   }

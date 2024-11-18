@@ -7,8 +7,8 @@ export interface IUserRegister {
   id: number
   name: string
   password: string
-  createAt: Date
-  updateAt: Date
+  create_time: Date
+  update_time: Date
 }
 
 export interface IUser {
