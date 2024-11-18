@@ -27,6 +27,9 @@ app.on(
       case STATUS_CODE.AUTHORIZATION_FAILED:
         errorMessage = 'authorization failed'
         break
+      case STATUS_CODE.DB_INSERT_ERROR:
+        errorMessage = 'database error'
+        break
       default:
         break
     }

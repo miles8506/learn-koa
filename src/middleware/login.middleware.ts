@@ -1,18 +1,16 @@
 import { Next } from 'koa'
 import { RouterContext } from '../types/base/context'
-import { ILoginRequest, ILoginResponse } from '../types/login/login'
+import { ILoginRequest } from '../types/login'
 import { EVENT_NAME } from '../constants/eventName'
 import { STATUS_CODE } from '../constants/statusCode'
 import userService from '../service/user.service'
 import { encryptionPassword } from '../utils/encryption'
 import jwt from 'jsonwebtoken'
 import { publicKey } from '../constants/keys'
+import { IUser } from '../types/users'
 
 class LoginMiddleware {
-  async verify(
-    ctx: RouterContext<{ user: Omit<ILoginResponse, 'token'> }>,
-    next: Next
-  ) {
+  async verify(ctx: RouterContext<{ user: IUser }>, next: Next) {
     const { name, password } = ctx.request.body as ILoginRequest
 
     if (!name.trim() || !password.trim()) {
@@ -41,17 +39,20 @@ class LoginMiddleware {
     await next()
   }
 
-  auth(ctx: RouterContext, next: Next) {
+  async auth(ctx: RouterContext<{ user: IUser }>, next: Next) {
     const token = ctx.header.authorization?.replace('Bearer ', '') ?? ''
 
     try {
-      jwt.verify(token, publicKey, { algorithms: ['RS256'] })
+      const user = jwt.verify(token, publicKey, {
+        algorithms: ['RS256']
+      }) as IUser
+      ctx.user = user
     } catch {
       ctx.app.emit(EVENT_NAME.ERROR, STATUS_CODE.AUTHORIZATION_FAILED, ctx)
       return
     }
 
-    next()
+    await next()
   }
 }
 

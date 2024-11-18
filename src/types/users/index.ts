@@ -4,9 +4,14 @@ export interface IUserRegisterRequest {
 }
 
 export interface IUserRegister {
-  id: number,
+  id: number
   name: string
   password: string
-  createAt: Date,
+  createAt: Date
   updateAt: Date
+}
+
+export interface IUser {
+  id: number
+  name: string
 }

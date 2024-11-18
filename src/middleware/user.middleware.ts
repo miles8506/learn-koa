@@ -1,6 +1,6 @@
 import { Next } from 'koa'
 import { RouterContext } from '../types/base/context'
-import { IUserRegisterRequest } from '../types/users/register'
+import { IUserRegisterRequest } from '../types/users'
 import userService from '../service/user.service'
 import { EVENT_NAME } from '../constants/eventName'
 import { STATUS_CODE } from '../constants/statusCode'
