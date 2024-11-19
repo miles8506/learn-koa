@@ -49,6 +49,21 @@ class MomentService {
     const [data] = await connection.execute(statement, [id])
     return data as IMomentListResponse[]
   }
+
+  async update(id: string, content: string) {
+    const statement = `UPDATE moment SET content = ? WHERE id = ?`
+    const [data] = await connection.execute(statement, [content, id])
+
+    return data
+  }
+
+  async permission(userId: string, momentId: string) {
+    const statement = `SELECT * FROM moment WHERE moment.id = ? && moment.user_id = ?;`
+
+    const [data] = await connection.execute(statement, [momentId, userId])
+
+    return (data as IMomentListResponse[]).length > 0
+  }
 }
 
 export default new MomentService()

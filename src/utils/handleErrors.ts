@@ -30,6 +30,15 @@ app.on(
       case STATUS_CODE.DB_INSERT_ERROR:
         errorMessage = 'database error'
         break
+      case STATUS_CODE.DB_UPDATE_ERROR:
+        errorMessage = 'update database error'
+        break
+      case STATUS_CODE.NOT_FOUND_MOMENT_ID:
+        errorMessage = 'not found moment id'
+        break
+      case STATUS_CODE.NOT_UPDATE_MOMENT_PERMISSION:
+        errorMessage = 'no update moment permission'
+        break
       default:
         break
     }

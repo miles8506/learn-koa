@@ -16,3 +16,7 @@ export interface IMomentListResponse {
   update_time: Date
   user: IUserRegister
 }
+
+export interface IMomentUpdateRequest {
+  content: string
+}
