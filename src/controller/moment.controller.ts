@@ -1,5 +1,9 @@
 import { IUser } from '../types/users'
-import { IMomentListRequest, IMomentListResponse, IMomentRequest } from '../types/moment'
+import {
+  IMomentListRequest,
+  IMomentListResponse,
+  IMomentRequest
+} from '../types/moment'
 import { RouterContext } from '../types/base/context'
 import momentService from '../service/moment.service'
 import { EVENT_NAME } from '../constants/eventName'
@@ -21,14 +25,30 @@ class MomentController {
     }
   }
 
-  async list(ctx: RouterContext<unknown, IMomentListResponse[]>) {
+  async list(ctx: RouterContext<unknown, { data: IMomentListResponse[] }>) {
     const query = ctx.query as unknown as IMomentListRequest
 
     try {
-      const res = await momentService.list(query)
-      ctx.body = res
+      const data = await momentService.list(query)
+      ctx.body = {
+        data
+      }
     } catch {
       ctx.app.emit(EVENT_NAME.ERROR, STATUS_CODE.DB_INSERT_ERROR, ctx)
+      return
+    }
+  }
+
+  async detail(ctx: RouterContext<unknown, { data: IMomentListResponse }>) {
+    const { id } = ctx.params
+
+    try {
+      const res = await momentService.queryById(id)
+      ctx.body = {
+        data: res[0]
+      }
+    } catch {
+      ctx.app.emit(EVENT_NAME.ERROR, STATUS_CODE.NOT_FOUND_MOMENT_ID, ctx)
       return
     }
   }

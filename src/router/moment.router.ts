@@ -6,5 +6,6 @@ const momentRouter = new Router({ prefix: '/moment' })
 
 momentRouter.post('/add', loginMiddleware.auth, momentController.add)
 momentRouter.get('/list', momentController.list)
+momentRouter.get('/:id', momentController.detail)
 
 export default momentRouter
