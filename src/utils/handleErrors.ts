@@ -28,10 +28,13 @@ app.on(
         errorMessage = 'authorization failed'
         break
       case STATUS_CODE.DB_INSERT_ERROR:
-        errorMessage = 'database error'
+        errorMessage = 'insert database error'
         break
       case STATUS_CODE.DB_UPDATE_ERROR:
         errorMessage = 'update database error'
+        break
+      case STATUS_CODE.DB_DELETE_ERROR:
+        errorMessage = 'delete db error'
         break
       case STATUS_CODE.NOT_FOUND_MOMENT_ID:
         errorMessage = 'not found moment id'

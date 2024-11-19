@@ -59,10 +59,16 @@ class MomentService {
 
   async permission(userId: string, momentId: string) {
     const statement = `SELECT * FROM moment WHERE moment.id = ? && moment.user_id = ?;`
-
     const [data] = await connection.execute(statement, [momentId, userId])
 
     return (data as IMomentListResponse[]).length > 0
+  }
+
+  async remove(id: string) {
+    const statement = `DELETE FROM moment WHERE moment.id = ?;`
+    const [data] = await connection.execute(statement, [id])
+
+    return data
   }
 }
 

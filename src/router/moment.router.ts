@@ -9,10 +9,16 @@ momentRouter.post('/add', loginMiddleware.auth, momentController.add)
 momentRouter.get('/list', momentController.list)
 momentRouter.get('/:id', momentController.detail)
 momentRouter.patch(
-  '/update/:id',
+  '/:id',
   loginMiddleware.auth,
   momentMiddleware.permission,
   momentController.update
+)
+momentRouter.delete(
+  '/:id',
+  loginMiddleware.auth,
+  momentMiddleware.permission,
+  momentController.remove
 )
 
 export default momentRouter

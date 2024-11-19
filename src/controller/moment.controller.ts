@@ -67,6 +67,20 @@ class MomentController {
       return
     }
   }
+
+  async remove(ctx: RouterContext<unknown, { data: QueryResult }>) {
+    const { id } = ctx.params
+
+    try {
+      const data = await momentService.remove(id)
+      ctx.body = {
+        data
+      }
+    } catch {
+      ctx.app.emit(EVENT_NAME.ERROR, STATUS_CODE.DB_DELETE_ERROR, ctx)
+      return
+    }
+  }
 }
 
 export default new MomentController()
