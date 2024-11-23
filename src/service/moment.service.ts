@@ -14,15 +14,16 @@ class MomentService {
   }
 
   async list(payload: IMomentListRequest) {
-    const { size, offset } = payload
+    const { size = '10', offset = '0' } = payload
 
     const statement = `
-      SELECT
+		SELECT
         m.id id,
         m.content content,
         m.createAt create_time,
         m.updateAt update_time,
-        JSON_OBJECT('id', u.id, 'name', u.name, 'create_time', u.createAt, 'update_time', u.updateAt) user
+        JSON_OBJECT('id', u.id, 'name', u.name, 'create_time', u.createAt, 'update_time', u.updateAt) user,
+        (SELECT COUNT(*) FROM comment WHERE m.id = comment.moment_id) comment_count
       FROM moment m
 	    LEFT JOIN user u ON m.user_id = u.id
 	    LIMIT ? OFFSET ?;
