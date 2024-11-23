@@ -15,6 +15,7 @@ export interface IMomentListResponse {
   create_time: Date
   update_time: Date
   user: IUserRegister
+  comment_count: number
 }
 
 export interface IMomentUpdateRequest {
