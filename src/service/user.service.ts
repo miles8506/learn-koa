@@ -24,6 +24,13 @@ class UserService {
 
     return result as IUserRegister[]
   }
+
+  async permission<T>(resource: string, userId: string, momentId: string) {
+    const statement = `SELECT * FROM ${resource} WHERE moment.id = ? && moment.user_id = ?;`
+    const [data] = await connection.execute(statement, [momentId, userId])
+
+    return (data as T[]).length > 0
+  }
 }
 
 export default new UserService()

@@ -42,10 +42,10 @@ class MomentController {
   }
 
   async detail(ctx: RouterContext<unknown, { data: IMomentListResponse }>) {
-    const { id } = ctx.params
+    const { momentId } = ctx.params
 
     try {
-      const res = await momentService.queryById(id)
+      const res = await momentService.queryById(momentId)
       ctx.body = {
         data: res[0]
       }
@@ -56,11 +56,11 @@ class MomentController {
   }
 
   async update(ctx: RouterContext<unknown, { data: QueryResult }>) {
-    const { id } = ctx.params
+    const { momentId } = ctx.params
     const { content } = ctx.request.body as IMomentUpdateRequest
 
     try {
-      const data = await momentService.update(id, content)
+      const data = await momentService.update(momentId, content)
       ctx.body = { data }
     } catch {
       ctx.app.emit(EVENT_NAME.ERROR, STATUS_CODE.DB_UPDATE_ERROR, ctx)
@@ -69,10 +69,10 @@ class MomentController {
   }
 
   async remove(ctx: RouterContext<unknown, { data: QueryResult }>) {
-    const { id } = ctx.params
+    const { momentId } = ctx.params
 
     try {
-      const data = await momentService.remove(id)
+      const data = await momentService.remove(momentId)
       ctx.body = {
         data
       }

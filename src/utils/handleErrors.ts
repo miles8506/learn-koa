@@ -39,9 +39,12 @@ app.on(
       case STATUS_CODE.NOT_FOUND_MOMENT_ID:
         errorMessage = 'not found moment id'
         break
-      case STATUS_CODE.NOT_UPDATE_MOMENT_PERMISSION:
-        errorMessage = 'no update moment permission'
+      case STATUS_CODE.NOT_UPDATE_PERMISSION:
+        errorMessage = 'not update permission'
         break
+      case STATUS_CODE.NOT_DELETE_PERMISSION:
+          errorMessage = 'not delete permission'
+          break
       default:
         break
     }
