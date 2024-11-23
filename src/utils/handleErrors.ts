@@ -36,6 +36,9 @@ app.on(
       case STATUS_CODE.DB_DELETE_ERROR:
         errorMessage = 'delete db error'
         break
+      case STATUS_CODE.DB_GET_ERROR:
+        errorMessage = 'get db error'
+        break
       case STATUS_CODE.NOT_FOUND_MOMENT_ID:
         errorMessage = 'not found moment id'
         break
@@ -43,8 +46,8 @@ app.on(
         errorMessage = 'not update permission'
         break
       case STATUS_CODE.NOT_DELETE_PERMISSION:
-          errorMessage = 'not delete permission'
-          break
+        errorMessage = 'not delete permission'
+        break
       default:
         break
     }
