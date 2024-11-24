@@ -17,6 +17,14 @@ class LabelService {
 
     return data as ILabelResponse[]
   }
+
+  async queryLabelByName(name: string) {
+    const statement = `SELECT * FROM label WHERE label.name = ?`
+
+    const [data] = await connection.execute(statement, [name])
+
+    return data as ILabelResponse[]
+  }
 }
 
 export default new LabelService()

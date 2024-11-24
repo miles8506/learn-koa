@@ -1,5 +1,6 @@
 import { IUser } from '../types/users'
 import {
+  ILabelContext,
   IMomentListRequest,
   IMomentListResponse,
   IMomentRequest,
@@ -10,6 +11,7 @@ import momentService from '../service/moment.service'
 import { EVENT_NAME } from '../constants/eventName'
 import { STATUS_CODE } from '../constants/statusCode'
 import { QueryResult } from 'mysql2'
+import momentLabelService from '../service/momentLabel.service'
 
 class MomentController {
   async add(ctx: RouterContext<{ user: IUser }>) {
@@ -79,6 +81,28 @@ class MomentController {
     } catch {
       ctx.app.emit(EVENT_NAME.ERROR, STATUS_CODE.DB_DELETE_ERROR, ctx)
       return
+    }
+  }
+
+  async labels(ctx: RouterContext<{ user: IUser; labels: ILabelContext[] }>) {
+    const { labels } = ctx
+    const { momentId } = ctx.params
+
+    try {
+      for (const label of labels) {
+        const isExist = await momentLabelService.hasExist(label.id, momentId)
+
+        if (isExist) continue
+
+        await momentLabelService.add(label.id, momentId)
+      }
+    } catch {
+      ctx.app.emit(EVENT_NAME.ERROR, STATUS_CODE.DB_GET_ERROR, ctx)
+      return
+    }
+
+    ctx.body = {
+      message: 'success'
     }
   }
 }

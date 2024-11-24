@@ -7,7 +7,6 @@ import { IUser } from '../types/users'
 class LoginController {
   login(ctx: RouterContext<{ user: IUser }, ILoginResponse>) {
     const user = ctx.user
-
     const token = jwt.sign(user, privateKey, {
       expiresIn: 60 * 60 * 24,
       algorithm: 'RS256'

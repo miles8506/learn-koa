@@ -21,3 +21,12 @@ export interface IMomentListResponse {
 export interface IMomentUpdateRequest {
   content: string
 }
+
+export interface IMomentLabels {
+  labels: string[]
+}
+
+export interface ILabelContext {
+  id: number
+  name: string
+}

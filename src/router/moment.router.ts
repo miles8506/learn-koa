@@ -2,6 +2,7 @@ import Router from '@koa/router'
 import momentController from '../controller/moment.controller'
 import loginMiddleware from '../middleware/login.middleware'
 import userMiddleware from '../middleware/user.middleware'
+import momentMiddleware from '../middleware/moment.middleware'
 
 const momentRouter = new Router({ prefix: '/moment' })
 
@@ -19,6 +20,13 @@ momentRouter.delete(
   loginMiddleware.auth,
   userMiddleware.permission,
   momentController.remove
+)
+momentRouter.post(
+  '/:momentId/labels',
+  loginMiddleware.auth,
+  userMiddleware.permission,
+  momentMiddleware.verifyLabel,
+  momentController.labels
 )
 
 export default momentRouter
