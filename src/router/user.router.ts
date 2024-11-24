@@ -11,4 +11,6 @@ userRouter.post(
   userController.register
 )
 
+userRouter.get('/avatar/:userId', userController.avatar)
+
 export default userRouter

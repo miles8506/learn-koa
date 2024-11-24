@@ -15,3 +15,13 @@ export interface IUser {
   id: number
   name: string
 }
+
+export interface IUserAvatar {
+  id: number
+  filename: string
+  mimetype: string
+  size: number
+  user_id: number
+  create_at: Date
+  update_at: Date
+}

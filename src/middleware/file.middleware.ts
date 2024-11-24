@@ -1,14 +1,13 @@
-import path from 'node:path'
 import multer from '@koa/multer'
+import { AVATAR_BASE_PATH } from '../constants/path'
 
 const upload = multer({
   storage: multer.diskStorage({
     destination(req, file, cb) {
-      console.log(path.resolve(__dirname, '../uploads'))
-      cb(null, path.resolve(__dirname, '../../uploads'))
+      cb(null, AVATAR_BASE_PATH)
     },
     filename(req, file, cb) {
-      cb(null, file.originalname)
+      cb(null, `${Date.now()}-${file.originalname}`)
     }
   })
 })

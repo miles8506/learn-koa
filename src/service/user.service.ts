@@ -1,5 +1,5 @@
 import connection from '../app/database'
-import { IUserRegisterRequest, IUserRegister } from '../types/users'
+import { IUserRegisterRequest, IUserRegister, IUserAvatar } from '../types/users'
 
 class UserService {
   async register({ name, password }: IUserRegisterRequest) {
@@ -30,6 +30,14 @@ class UserService {
     const [data] = await connection.execute(statement, [momentId, userId])
 
     return (data as T[]).length > 0
+  }
+
+  async avatar(user_id: string) {
+    const statement = `SELECT * FROM avatar WHERE user_id = ?`
+
+    const [data] = await connection.execute(statement, [user_id])
+
+    return (data as IUserAvatar[]).pop()
   }
 }
 
